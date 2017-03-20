@@ -330,9 +330,11 @@ abstract class BaseFilemanager
             }
         }
 
-        return json_encode([
+        echo json_encode([
             'data' => $response,
         ]);
+
+        exit;
     }
 
     protected function setParams()
