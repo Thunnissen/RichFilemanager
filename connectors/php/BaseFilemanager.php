@@ -333,8 +333,6 @@ abstract class BaseFilemanager
         echo json_encode([
             'data' => $response,
         ]);
-
-        exit;
     }
 
     protected function setParams()
