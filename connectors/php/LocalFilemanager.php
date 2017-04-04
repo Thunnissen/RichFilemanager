@@ -352,7 +352,7 @@ class LocalFilemanager extends BaseFilemanager
 			}
 		}
 
-		if(!rename($old_file, $new_file)) {
+		if(!@rename($old_file, $new_file)) {
 			if(is_dir($old_file)) {
 				$this->error(sprintf($this->lang('ERROR_RENAMING_DIRECTORY'), $filename, $new_name));
 			} else {
@@ -366,7 +366,7 @@ class LocalFilemanager extends BaseFilemanager
 				$new_thumbnail = $this->get_thumbnail_path($new_file);
 				$old_thumbnail = $this->get_thumbnail_path($old_file);
 				if(file_exists($old_thumbnail)) {
-					rename($old_thumbnail, $new_thumbnail);
+                    @rename($old_thumbnail, $new_thumbnail);
 				}
 			}
 		}
@@ -510,7 +510,7 @@ class LocalFilemanager extends BaseFilemanager
 		$old_thumbnail = $this->get_thumbnail_path($source_fullpath);
 
 		// move file or folder
-		if(!rename($source_fullpath, $new_fullpath)) {
+		if(!@rename($source_fullpath, $new_fullpath)) {
 			if(is_dir($source_fullpath)) {
 				$this->error(sprintf($this->lang('ERROR_MOVING_DIRECTORY'), $filename, $target_input));
 			} else {
@@ -524,7 +524,7 @@ class LocalFilemanager extends BaseFilemanager
 				$new_thumbnail = $this->get_thumbnail_path($new_fullpath);
 				// delete old thumbnail(s) if destination folder does not exist
 				if(file_exists(dirname($new_thumbnail))) {
-					rename($old_thumbnail, $new_thumbnail);
+                    @rename($old_thumbnail, $new_thumbnail);
 				} else {
 					is_dir($old_thumbnail) ? $this->unlinkRecursive($old_thumbnail) : unlink($old_thumbnail);
 				}
@@ -592,12 +592,12 @@ class LocalFilemanager extends BaseFilemanager
                 $replacement_fullpath = $target_fullpath . $file->name;
                 Log::info('replacing "' . $source_fullpath . '" with "' . $replacement_fullpath . '"');
 
-                rename($replacement_fullpath, $source_fullpath);
+                @rename($replacement_fullpath, $source_fullpath);
 
                 $new_thumbnail = $this->get_thumbnail_path($replacement_fullpath);
                 $old_thumbnail = $this->get_thumbnail_path($source_fullpath);
                 if(file_exists($new_thumbnail)) {
-                    rename($new_thumbnail, $old_thumbnail);
+                    @rename($new_thumbnail, $old_thumbnail);
                 }
 
                 $relative_path = $this->cleanPath('/' . $source_path);
