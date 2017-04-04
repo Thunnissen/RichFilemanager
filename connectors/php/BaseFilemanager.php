@@ -404,8 +404,6 @@ abstract class BaseFilemanager
         } else {
             echo "<h2>Server error: {$title}</h2>";
         }
-
-        exit;
     }
 
     /**
